@@ -2,6 +2,7 @@
 -- Ejercicios
 -- -----------
 
+use cursomysql;
 -- Llenar las tablas artículos, clientes y facturas con 10 registros cada una,
 insert into clientes (nombre, apellido, dni, direccion) values
 ('Gabriel', 'Mendez', '34111222', 'Av. Directorio 145'),
@@ -65,7 +66,7 @@ select * from articulos where precio not in (1200, 2000, 3000);
 select * from articulos order by precio desc, nombre;
 
 -- i-	Listar todos los artículos incluyendo una columna denominada precio con IVA, la cual deberá tener el monto con el iva del producto.
-select nombre, precio, precio * 1.21 as precio_con_iva from articulos;
+select nombre as name, precio, precio * 1.21 as precio_con_iva from articulos;
 
 -- j- 	Listar todos los artículos incluyendo una columna denominada “cantidad de cuotas” y otra “valor de cuota”, la cantidad es fija y 
 -- es 3, el valor de cuota corresponde a 1/3 del monto con un 5% de interés.
@@ -79,7 +80,7 @@ select * from articulos where nombre like '_____a';
 select * from articulos where nombre like '%m%m%';
 
 -- listar todos los articulos cuyo nombre esté compuesto de al menos, 2 palabras
-select * from articulos where nombre like '% %';
+select * from articulos where nombre like '%_ _%';
 
 -- listar los primeros 6 articulos ordenados por precio en forma descendente
 select * from articulos order by precio desc limit 6;
@@ -115,6 +116,10 @@ select * from clientes;
 -- IMPORTANTE: es una copia de la tabla, pero no copia las claves primarias ni los auto_increment ni los índices o restricciones
 describe clientes;
 describe clientes2;
+
+-- crea una copia de la estructura (cantidad y nombres de campos, así como sus tipos de datos)
+create table clientes3 select * from clientes limit 0;
+select * from clientes3;
 
 -- Tablas temporales
 -- las tablas temporales existen solo durante la sesión/conexión actual
@@ -177,7 +182,7 @@ update clientes set nombre='Jose' where id=1;
 update clientes set nombre='Pablo', apellido='Fuentes', dni='21053119' where id=3;
 
 -- 3- Actualizar la dirección del cliente de id 2 a vacío
-update clientes set direccion='' where id=2;
+update clientes set direccion='' where id=2; -- vacío no es lo mismo que null
 
 -- 4- Actualizar las direcciones de los clientes de id 3, 5 y 7 a null
 update clientes set direccion = null where id in (3, 5, 7);
